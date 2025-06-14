@@ -1,0 +1,36 @@
+{
+  "pcb_placements": [
+    {
+      "selector": "U2",
+      "center": {
+        "x": 0.2009329027628297,
+        "y": -32.04664513814137
+      },
+      "relative_to": "group_center"
+    },
+    {
+      "selector": "U1",
+      "center": {
+        "x": -4.358349812862349,
+        "y": -64.5035772303632
+      },
+      "relative_to": "group_center"
+    },
+    {
+      "selector": "LED41",
+      "center": {
+        "x": 24,
+        "y": -8.75
+      },
+      "relative_to": "group_center"
+    },
+    {
+      "selector": "LED40",
+      "center": {
+        "x": 11.425905992106209,
+        "y": -33.14899533548618
+      },
+      "relative_to": "group_center"
+    }
+  ]
+}
