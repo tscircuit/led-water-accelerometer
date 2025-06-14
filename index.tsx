@@ -2,7 +2,7 @@ import { LIS3DHTR as IMU } from "./imports/LIS3DHTR";
 import { WS2812B_2020 as LedWithIc } from "@tsci/seveibar.WS2812B_2020";
 import { PICO } from "@tsci/seveibar.pico";
 import { grid } from "@tscircuit/math-utils";
-import { sel } from "tscircuit";
+import { sel } from "@tscircuit/core";
 
 /**
  * Updated board description that fixes the power‑/ground‑/data‑line issues
@@ -57,16 +57,16 @@ export default () => (
 
 		{/* ───────────────────────────────────────── BULK DECOUPLING ─────────────────────────────────── */}
 		<capacitor
-			name="Cbulk"
+			name="C2"
 			footprint="1206"
 			capacitance="100uF"
-			pcbX={-60}
+			pcbX={-5}
 			pcbY={-50}
 			schX={-32}
 			schY={-10}
 		/>
-		<trace from={sel.Cbulk.pin1} to="net.V5" />
-		<trace from={sel.Cbulk.pin2} to="net.GND" />
+		<trace from={sel.C2.pin1} to="net.V5" />
+		<trace from={sel.C2.pin2} to="net.GND" />
 
 		{/* ───────────────────────────────────────── IMU DECOUPLING ─────────────────────────────────── */}
 		<capacitor
@@ -89,8 +89,8 @@ export default () => (
 			resistance="330"
 			schX={-10}
 			schY={-3}
-			pcbX={-15}
-			pcbY={-20}
+			pcbX={30}
+			pcbY={-40}
 		/>
 		<trace from={sel.U1.GP6} to={sel.R1.pin1} />
 		<trace from={sel.R1.pin2} to={sel.LED1.DI} />
