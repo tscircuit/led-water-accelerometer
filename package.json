@@ -8,6 +8,7 @@
     "electronics"
   ],
   "scripts": {
+    "start": "tsci dev",
     "dev": "tsci dev",
     "build": "tsci build"
   },

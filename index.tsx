@@ -119,5 +119,10 @@ export default () => (
 		<trace from={sel.U1.GP11} to={sel.U2.SDI} />
 		<trace from={sel.U1.GP12} to={sel.U2.SDO} />
 		<trace from={sel.U1.GP17} to={sel.U2.CS} />
+		<group pcbY={-60}>
+			<silkscreentext text="Routed with the tscircuit autorouter" pcbX={70} pcbY={0} fontSize={2} anchorAlignment="bottom_right" />
+			<silkscreentext text="MIT Open Source" pcbX={70} pcbY={-2} fontSize={2} anchorAlignment="bottom_right" />
+			<silkscreentext text="tscircuit.com/seveibar/led-water-accelerometer" pcbX={70} pcbY={-4} fontSize={2} anchorAlignment="bottom_right" />
+			</group>
 	</board>
 );
