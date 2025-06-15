@@ -13,7 +13,7 @@ import { sel } from "@tscircuit/core";
  *   • Bulk and local decoupling capacitors for the LED string
  */
 export default () => (
-	<board width={142} height={130} autorouter="auto-cloud">
+	<board width={142} height={130}>
 		{/* ───────────────────────────────────────── LED MATRIX ───────────────────────────────────────── */}
 		{grid({
 			cols: 7,
@@ -52,7 +52,7 @@ export default () => (
 		})}
 
 		{/* ───────────────────────────────────────── CORE PARTS ───────────────────────────────────────── */}
-		<PICO name="U1" pcbY={-45} pcbX={-44} schX={-25} schY={-6} />
+		<PICO name="U1" pcbY={-45} pcbX={-44} schX={-25} schY={-6} showPinAliases />
 		<IMU name="U2" schX={-20} schY={-6} pcbY={-50} pcbX={30} />
 
 		{/* ───────────────────────────────────────── BULK DECOUPLING ─────────────────────────────────── */}

@@ -1,6 +1,6 @@
 {
-  "name": "mug-led",
-  "version": "1.0.5",
+  "name": "@tsci/seveibar.led-water-accelerometer",
+  "version": "1.0.6",
   "description": "A TSCircuit project",
   "main": "index.tsx",
   "keywords": [
@@ -15,7 +15,7 @@
     "@tscircuit/core": "^0.0.428",
     "@types/bun": "latest",
     "@types/react": "^19.1.8",
-    "tscircuit": "^0.0.494"
+    "tscircuit": "^0.0.495"
   },
   "dependencies": {
     "@tsci/seveibar.PICO": "npm:@tsci/seveibar.pico@^0.1.0"

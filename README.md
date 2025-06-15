@@ -1,15 +1,3 @@
-# mug-led
+# led-water-accelerometer
 
-To install dependencies:
-
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run index.tsx
-```
-
-This project was created using `bun init` in bun v1.2.16. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+This is an LED matrix with an accelerometer and a PICO. When you tilt the PCB, the LEDs dim and change color to simulate water flowing.
