@@ -106,7 +106,7 @@ export default () => (
     {/* ───────────────────────────────────────── MOUTING HOLES ─────────────────────────────────────── */}
     <hole pcbX={-65} pcbY={60} radius={3} />
     <hole pcbX={65} pcbY={60} radius={3} />
-    <hole pcbX={65} pcbY={-60} radius={3} />
+    <hole pcbX={65} pcbY={-54} radius={3} />
 
     {/* ───────────────────────────────────────── GROUNDS ─────────────────────────────────────────── */}
     {/* Stitch several of the Pico & IMU grounds into the common pour */}
