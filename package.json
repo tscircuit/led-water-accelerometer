@@ -13,10 +13,10 @@
     "build": "tsci build"
   },
   "devDependencies": {
-    "@tscircuit/core": "^0.0.428",
+    "@tscircuit/core": "^0.0.537",
     "@types/bun": "latest",
     "@types/react": "^19.1.8",
-    "tscircuit": "^0.0.495"
+    "tscircuit": "^0.0.517"
   },
   "dependencies": {
     "@tsci/seveibar.PICO": "npm:@tsci/seveibar.pico@^0.1.0"
