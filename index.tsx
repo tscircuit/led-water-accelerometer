@@ -16,9 +16,9 @@ export default () => (
   <board width={142} height={130}>
     {/* ───────────────────────────────────────── LED MATRIX ───────────────────────────────────────── */}
     {grid({
-      cols: 7,
+      cols: 8,
       rows: 6,
-      xSpacing: 38,
+      xSpacing: 32,
       ySpacing: 30,
       offsetX: 0,
       offsetY: 36,
@@ -52,8 +52,8 @@ export default () => (
     })}
 
     {/* ───────────────────────────────────────── CORE PARTS ───────────────────────────────────────── */}
-    <PICO name="U1" pcbY={-45} pcbX={-44} schX={-25} schY={-6} showPinAliases />
-    <IMU name="U2" schX={-20} schY={-6} pcbY={-50} pcbX={30} />
+    <PICO name="U1" pcbY={-45} pcbX={-44} schX={-25} schY={-6} schWidth={4} showPinAliases  />
+    <IMU name="U2" schX={-20} schY={-6} pcbY={-48} pcbX={34} />
 
     {/* ───────────────────────────────────────── BULK DECOUPLING ─────────────────────────────────── */}
     <capacitor
