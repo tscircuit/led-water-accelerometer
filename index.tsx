@@ -52,7 +52,15 @@ export default () => (
     })}
 
     {/* ───────────────────────────────────────── CORE PARTS ───────────────────────────────────────── */}
-    <PICO name="U1" pcbY={-45} pcbX={-44} schX={-25} schY={-6} schWidth={4} showPinAliases  />
+    <PICO
+      name="U1"
+      pcbY={-45}
+      pcbX={-44}
+      schX={-25}
+      schY={-6}
+      schWidth={4}
+      showPinAliases
+    />
     <IMU name="U2" schX={-20} schY={-6} pcbY={-48} pcbX={34} />
 
     {/* ───────────────────────────────────────── BULK DECOUPLING ─────────────────────────────────── */}
@@ -127,7 +135,7 @@ export default () => (
     <trace from={sel.U1.GP11} to={sel.U2.SDI} />
     <trace from={sel.U1.GP12} to={sel.U2.SDO} />
     <trace from={sel.U1.GP17} to={sel.U2.CS} />
-    <group pcbY={-60}>
+    <group pcbY={-59}>
       <silkscreentext
         text="Routed with the tscircuit autorouter"
         pcbX={70}
