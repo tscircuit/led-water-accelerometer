@@ -44,18 +44,34 @@ LSB_G    = 0.00098      # 1 mg / LSB  (hi-res ±2 g)
 G_CLAMP  = 15           # your observed ±15 range  → ±90 °
 DEG_PER  = 90 / G_CLAMP # degrees per accel unit
 
-# ───── LED update helper ─────
-def update(angle_rad: float) -> None:
-    cos_a, sin_a = math.cos(angle_rad), math.sin(angle_rad)
-    sat_step     = MAX_LEVEL / SOFT_WIDTH
+
+# ─── LED update helper ───
+def update(gx: float, gy: float, gz: float) -> None:
+    """
+    gx, gy, gz are gravity components in g‑units (‑1 … +1).
+    Project gravity onto the LED plane (x,y) and fill pixels
+    whose dot‑product with that vector is positive (below water line).
+    """
+    # 1. Project gravity onto board plane
+    vx, vy = -gx, -gy           # minus sign because we want "down" direction
+    mag = (vx * vx + vy * vy) ** 0.5 
+
+    # 2. If board is nearly flat, fake gravity toward the edge selected by gz
+    if mag < 0.05:             # ≈ 0.05 g threshold
+        # choose +Y (top) when board is upside‑down, else ‑Y (bottom)
+        vy = 1.0 if gz > 0 else -1.0
+        vx = 0.0
+        mag = 1.0
+
+    # 3. Scaling for fade below the water‑line
+    sat_step = (MAX_LEVEL / SOFT_WIDTH) / mag
 
     for i, (x, y) in enumerate(coords):
-        y_rot = x * sin_a + y * cos_a      # rotate point
-
-        if y_rot >= 0:
+        depth = -(x * vx + y * vy)      # >0 means “below water‑line”
+        if depth <= 0:
             lvl = 0
         else:
-            lvl = int(min(-y_rot * sat_step, MAX_LEVEL))
+            lvl = int(min(depth * sat_step, MAX_LEVEL))
 
         np[i] = (lvl * COLOR_CH[0],
                  lvl * COLOR_CH[1],
@@ -63,14 +79,16 @@ def update(angle_rad: float) -> None:
 
     np.write()
 
-# ───── Main loop ─────
+
+# ─── Main loop ───
 while True:
     raw = _r(0x28, 6)
-    x_raw, _, _ = struct.unpack("<hhh", raw)
-    x_val = x_raw * LSB_G                 # ≈ -15 … +15
-    x_val = max(min(x_val,  G_CLAMP), -G_CLAMP)
+    x_raw, y_raw, z_raw = struct.unpack("<hhh", raw)
 
-    angle_rad = -math.radians(x_val * DEG_PER)
-    update(angle_rad)
+    # Convert to g‑units and clamp
+    ax = max(min(x_raw * LSB_G,  G_CLAMP), -G_CLAMP)
+    ay = max(min(y_raw * LSB_G,  G_CLAMP), -G_CLAMP)
+    az =            z_raw * LSB_G               # no clamp needed here
 
-    time.sleep(0.05)                      # ~20 fps
+    update(ax, ay, az)
+    time.sleep(0.05)          # ~20 fps
