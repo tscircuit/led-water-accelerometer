@@ -1,0 +1,481 @@
+from machine import Pin
+import neopixel
+import time
+
+# ───── LED Setup ─────
+LED_PIN = 6
+COLS, ROWS = 7, 6  # 7 columns, 6 rows based on your setup
+NUM_LEDS = COLS * ROWS
+np = neopixel.NeoPixel(Pin(LED_PIN), NUM_LEDS)
+
+class NeoPixelMatrix:
+    def __init__(self, neopixel_strip, cols, rows):
+        """
+        Initialize the NeoPixel Matrix
+        neopixel_strip: the neopixel object
+        cols: number of columns (7)
+        rows: number of rows (6)
+        """
+        self.np = neopixel_strip
+        self.cols = cols
+        self.rows = rows
+        self.clear_matrix()
+        
+    def xy_to_index(self, x, y):
+        """Convert x,y coordinates to NeoPixel index"""
+        # Adjust this based on how your LEDs are wired
+        # This assumes row-major order: row 0: 0-6, row 1: 7-13, etc.
+        return y * self.cols + x
+    
+    def clear_matrix(self):
+        """Turn off all LEDs"""
+        for i in range(NUM_LEDS):
+            self.np[i] = (0, 0, 0)
+        self.np.write()
+    
+    def set_pixel(self, x, y, color):
+        """Set a single pixel to a color"""
+        if 0 <= x < self.cols and 0 <= y < self.rows:
+            idx = self.xy_to_index(x, y)
+            self.np[idx] = color
+    
+    def display_pattern(self, pattern, color=(50, 0, 0), duration=2):
+        """
+        Display a pattern on the LED matrix
+        pattern: 6x7 list of lists with 1s and 0s (note: rows x cols)
+        color: RGB tuple for lit LEDs
+        duration: how long to display in seconds
+        """
+        self.clear_matrix()
+        
+        # Display the pattern
+        for row_idx, row_pattern in enumerate(pattern):
+            for col_idx, led_state in enumerate(row_pattern):
+                if led_state == 1:
+                    self.set_pixel(col_idx, row_idx, color)
+        
+        self.np.write()
+        time.sleep(duration)
+
+# Compact letter patterns (5 pixels wide x 6 pixels tall for better proportions)
+LETTER_PATTERNS = {
+    'A': [
+        [0,1,1,1,0],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,1,1,1,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1]
+    ],
+    'B': [
+        [1,1,1,1,0],
+        [1,0,0,0,1],
+        [1,1,1,1,0],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,1,1,1,0]
+    ],
+    'C': [
+        [0,1,1,1,1],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [0,1,1,1,1]
+    ],
+    'D': [
+        [1,1,1,1,0],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,1,1,1,0]
+    ],
+    'E': [
+        [1,1,1,1,1],
+        [1,0,0,0,0],
+        [1,1,1,1,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,1,1,1,1]
+    ],
+    'F': [
+        [1,1,1,1,1],
+        [1,0,0,0,0],
+        [1,1,1,1,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0]
+    ],
+    'G': [
+        [0,1,1,1,1],
+        [1,0,0,0,0],
+        [1,0,1,1,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [0,1,1,1,1]
+    ],
+    'H': [
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,1,1,1,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1]
+    ],
+    'I': [
+        [1,1,1,1,1],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [1,1,1,1,1]
+    ],
+    'J': [
+        [0,0,1,1,1],
+        [0,0,0,1,0],
+        [0,0,0,1,0],
+        [0,0,0,1,0],
+        [1,0,0,1,0],
+        [0,1,1,1,0]
+    ],
+    'K': [
+        [1,0,0,0,1],
+        [1,0,0,1,0],
+        [1,0,1,0,0],
+        [1,1,0,0,0],
+        [1,0,1,0,0],
+        [1,0,0,1,0]
+    ],
+    'L': [
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0],
+        [1,1,1,1,1]
+    ],
+    'M': [
+        [1,0,0,0,1],
+        [1,1,0,1,1],
+        [1,0,1,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1]
+    ],
+    'N': [
+        [1,0,0,0,1],
+        [1,1,0,0,1],
+        [1,0,1,0,1],
+        [1,0,0,1,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1]
+    ],
+    'O': [
+        [0,1,1,1,0],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [0,1,1,1,0]
+    ],
+    'P': [
+        [1,1,1,1,0],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,1,1,1,0],
+        [1,0,0,0,0],
+        [1,0,0,0,0]
+    ],
+    'Q': [
+        [0,1,1,1,0],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,1,0,1],
+        [1,0,0,1,1],
+        [0,1,1,1,1]
+    ],
+    'R': [
+        [1,1,1,1,0],
+        [1,0,0,0,1],
+        [1,1,1,1,0],
+        [1,0,1,0,0],
+        [1,0,0,1,0],
+        [1,0,0,0,1]
+    ],
+    'S': [
+        [0,1,1,1,1],
+        [1,0,0,0,0],
+        [0,1,1,1,0],
+        [0,0,0,0,1],
+        [0,0,0,0,1],
+        [1,1,1,1,0]
+    ],
+    'T': [
+        [1,1,1,1,1],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0]
+    ],
+    'U': [
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [0,1,1,1,0]
+    ],
+    'V': [
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [0,1,0,1,0],
+        [0,0,1,0,0]
+    ],
+    'W': [
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,0,0,1],
+        [1,0,1,0,1],
+        [1,1,0,1,1],
+        [1,0,0,0,1]
+    ],
+    'X': [
+        [1,0,0,0,1],
+        [0,1,0,1,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,1,0,1,0],
+        [1,0,0,0,1]
+    ],
+    'Y': [
+        [1,0,0,0,1],
+        [0,1,0,1,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0],
+        [0,0,1,0,0]
+    ],
+    'Z': [
+        [1,1,1,1,1],
+        [0,0,0,1,0],
+        [0,0,1,0,0],
+        [0,1,0,0,0],
+        [1,0,0,0,0],
+        [1,1,1,1,1]
+    ]
+}
+
+# Utility functions
+def show_letter(matrix, letter, color=(50, 0, 0), duration=3):
+    """Show a single letter"""
+    letter = letter.upper()
+    if letter in LETTER_PATTERNS:
+        print(f"Showing letter: {letter}")
+        matrix.display_pattern(LETTER_PATTERNS[letter], color, duration)
+    else:
+        print(f"Letter '{letter}' not found in patterns")
+
+def show_word(matrix, word, color=(50, 0, 0), letter_duration=1.5, gap_duration=0.5):
+    """Display a word letter by letter"""
+    print(f"Showing word: {word}")
+    for letter in word.upper():
+        if letter in LETTER_PATTERNS:
+            matrix.display_pattern(LETTER_PATTERNS[letter], color, letter_duration)
+            time.sleep(gap_duration)
+        elif letter == ' ':
+            matrix.clear_matrix()
+            time.sleep(gap_duration * 2)
+
+def demo_alphabet(matrix, color=(50, 0, 0)):
+    """Demo showing all letters"""
+    print("Starting alphabet demo...")
+    for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+        print(f"Showing: {letter}")
+        matrix.display_pattern(LETTER_PATTERNS[letter], color, duration=1)
+        time.sleep(0.5)
+
+def scroll_text(matrix, text, color=(50, 0, 0), speed=0.05, letter_spacing=1):
+    """
+    Animate text scrolling from right to left with smooth flow motion
+    text: string to display
+    color: RGB color tuple
+    speed: delay between animation frames (smaller = faster)
+    letter_spacing: pixels between letters
+    """
+    text = text.upper()
+    
+    # Calculate total width needed for all letters
+    letter_width = 5  # Each letter is now 5 pixels wide
+    total_width = len(text) * (letter_width + letter_spacing) - letter_spacing
+    
+    # Start position (letters start off-screen to the right)
+    start_x = COLS
+    end_x = -total_width
+    
+    print(f"Scrolling text: {text}")
+    
+    # Create a buffer to store the current frame
+    frame_buffer = [[0 for _ in range(COLS)] for _ in range(ROWS)]
+    
+    try:
+        # Animate from right to left with fractional positions for smoother motion
+        position = float(start_x)
+        
+        while position > end_x:
+            # Clear the frame buffer
+            for y in range(ROWS):
+                for x in range(COLS):
+                    frame_buffer[y][x] = 0
+            
+            # Draw each letter at its current position
+            current_x = position
+            for char in text:
+                if char in LETTER_PATTERNS and char != ' ':
+                    draw_letter_to_buffer(frame_buffer, char, int(current_x), 0, color)
+                elif char == ' ':
+                    pass  # Just skip space, creates gap
+                
+                current_x += letter_width + letter_spacing
+            
+            # Update only changed pixels
+            update_matrix_from_buffer(matrix, frame_buffer)
+            
+            # Move position smoothly
+            position -= 1.0  # Move by 1 pixel each frame
+            time.sleep(speed)
+            
+    except KeyboardInterrupt:
+        print("\nAnimation stopped by user")
+        matrix.clear_matrix()
+
+def draw_letter_to_buffer(buffer, letter, start_x, start_y, color):
+    """
+    Draw a letter to the frame buffer
+    """
+    if letter not in LETTER_PATTERNS:
+        return
+    
+    pattern = LETTER_PATTERNS[letter]
+    
+    for row_idx, row_pattern in enumerate(pattern):
+        for col_idx, pixel in enumerate(row_pattern):
+            if pixel == 1:
+                screen_x = start_x + col_idx
+                screen_y = start_y + row_idx
+                
+                # Only draw if the pixel is within screen bounds
+                if 0 <= screen_x < COLS and 0 <= screen_y < ROWS:
+                    buffer[screen_y][screen_x] = color
+
+def update_matrix_from_buffer(matrix, buffer):
+    """
+    Update the LED matrix from the frame buffer
+    """
+    for y in range(ROWS):
+        for x in range(COLS):
+            if buffer[y][x] != 0:
+                matrix.set_pixel(x, y, buffer[y][x])
+            else:
+                matrix.set_pixel(x, y, (0, 0, 0))  # Turn off pixel
+    
+    matrix.np.write()
+
+def scroll_text_continuous(matrix, text, color=(50, 0, 0), speed=0.05, letter_spacing=1):
+    """
+    Continuously scroll text in a loop with smooth motion
+    """
+    print(f"Continuously scrolling: {text}")
+    try:
+        while True:
+            scroll_text(matrix, text, color, speed, letter_spacing)
+            time.sleep(0.2)  # Brief pause between loops
+    except KeyboardInterrupt:
+        print("\nContinuous scrolling stopped")
+        matrix.clear_matrix()
+
+
+def smooth_fade_scroll(matrix, text, color=(50, 0, 0), speed=0.03, letter_spacing=1):
+    """
+    Ultra-smooth scrolling with fade effects for even smoother motion
+    """
+    text = text.upper()
+    
+    letter_width = 5
+    total_width = len(text) * (letter_width + letter_spacing) - letter_spacing
+    start_x = COLS
+    end_x = -total_width
+    
+    print(f"Smooth fade scrolling: {text}")
+    
+    frame_buffer = [[0 for _ in range(COLS)] for _ in range(ROWS)]
+    
+    try:
+        position = float(start_x)
+        
+        while position > end_x:
+            # Clear the frame buffer
+            for y in range(ROWS):
+                for x in range(COLS):
+                    frame_buffer[y][x] = 0
+            
+            current_x = position
+            for char in text:
+                if char in LETTER_PATTERNS and char != ' ':
+                    draw_letter_to_buffer(frame_buffer, char, int(current_x), 0, color)
+                
+                current_x += letter_width + letter_spacing
+            
+            # Update matrix from buffer
+            update_matrix_from_buffer(matrix, frame_buffer)
+            
+            position -= 0.5  # Move by half pixel for even smoother motion
+            time.sleep(speed)
+            
+    except KeyboardInterrupt:
+        print("\nSmooth animation stopped")
+        matrix.clear_matrix()
+
+# Main execution
+if __name__ == "__main__":
+    # Initialize the NeoPixel matrix using your existing setup
+    matrix = NeoPixelMatrix(np, COLS, ROWS)
+    print("NeoPixel LED Matrix initialized!")
+    
+    try:
+        # SCROLLING TEXT ANIMATIONS:
+        
+        # Example 1: Basic "tscircuit" scroll with smooth motion
+        # scroll_text(matrix, "tscircuit", color=(0, 0, 50), speed=0.05)
+        
+        # Example 2: Ultra-smooth fade scrolling (even smoother)
+        # smooth_fade_scroll(matrix, "tscircuit", color=(50, 0, 0), speed=0.03)
+        
+        # Example 3: Show multiple letters demo first
+        # show_multiple_letters_demo(matrix)
+        
+        # Example 4: Fast smooth scroll in green
+        # scroll_text(matrix, "tscircuit", color=(0, 50, 0), speed=0.03)
+        
+        # Example 5: Rainbow colored letters with smooth motion
+        # rainbow_scroll_text(matrix, "tscircuit", speed=0.05)
+        
+        # Example 6: Continuous smooth loop
+        scroll_text_continuous(matrix, "tscircuit", color=(0, 0, 50), speed=0.05)
+        
+        # Example 5: Different text
+        # scroll_text(matrix, "hello world", color=(50, 25, 0), speed=0.1)
+        
+        # STATIC LETTER EXAMPLES:
+        # show_letter(matrix, 'A', color=(50, 0, 0), duration=5)
+        # show_word(matrix, "HELLO", color=(0, 50, 0), letter_duration=2)
+        # demo_alphabet(matrix, color=(50, 0, 0))
+            
+    except KeyboardInterrupt:
+        print("\nStopping...")
+    finally:
+        matrix.clear_matrix()
+        print("Matrix cleared.")
