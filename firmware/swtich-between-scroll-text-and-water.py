@@ -54,7 +54,7 @@ def show_switch_feedback():
     # Flash white 2 times
     for flash in range(2):
         for i in range(NUM_LEDS):
-            np[i] = (30, 30, 30)
+            np[i] = (10, 10, 10)
         np.write()
         time.sleep(0.1)
         

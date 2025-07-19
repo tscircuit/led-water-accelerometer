@@ -47,7 +47,7 @@ def show_switch_feedback():
     """Flash the whole matrix twice when the mode changes"""
     for _ in range(2):
         for i in range(NUM_LEDS):
-            np[i] = (30, 30, 30)
+            np[i] = (10, 10, 10)
         np.write()
         time.sleep(0.1)
 
