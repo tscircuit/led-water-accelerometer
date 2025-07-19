@@ -11,7 +11,7 @@ micropython.alloc_emergency_exception_buf(100)
 
 # ───── LED Setup ─────
 LED_PIN = 6
-COLS, ROWS = 7, 6
+COLS, ROWS = 8, 6
 NUM_LEDS = COLS * ROWS
 np = neopixel.NeoPixel(Pin(LED_PIN), NUM_LEDS)
 
