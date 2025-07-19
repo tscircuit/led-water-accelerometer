@@ -300,13 +300,12 @@ def flame_animation():
         time.sleep(2) # Show message before switching
         return
 
-    micropython.const(1)
-    PARTICLE_COUNT   = const(12)
+    PARTICLE_COUNT   = 12
     TURBULENCE       = 50.0
-    LIFETIME         = const(18)
+    LIFETIME         = 18
     HEAT_INTENSITY   = 0.3
     FLAME_WIDTH      = 2.0
-    SPAWN_RATE       = const(1)
+    SPAWN_RATE       = 1
     GRAVITY_STRENGTH = 0.8
 
     x_off = (COLS - 1) / 2
