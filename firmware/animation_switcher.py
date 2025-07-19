@@ -44,7 +44,7 @@ def check_bootsel_button(timer):
         print(f"🎬 BOOTSEL pressed! Switching to mode {current_mode} (Press #{total_presses})")
         
         onboard_led.on()
-        show_switch_feedback()
+        # show_switch_feedback()
         
     elif current_state == 0 and last_button_state == 1:
         print("🔄 BOOTSEL button released")
