@@ -19,7 +19,7 @@
     "tscircuit": "^0.0.517"
   },
   "dependencies": {
-    "@tsci/seveibar.PICO": "npm:@tsci/seveibar.pico@^0.1.0"
+    "@tsci/seveibar.PICO": "^0.1.0"
   },
   "private": true,
   "peerDependencies": {

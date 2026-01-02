@@ -1,10 +1,11 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "@tsci/seveibar.led-water-accelerometer",
       "dependencies": {
-        "@tsci/seveibar.PICO": "npm:@tsci/seveibar.pico@^0.1.0",
+        "@tsci/seveibar.PICO": "^0.1.0",
       },
       "devDependencies": {
         "@tscircuit/core": "^0.0.537",
@@ -42,7 +43,7 @@
 
     "@remix-run/router": ["@remix-run/router@1.23.0", "", {}, "sha512-O3rHJzAQKamUz1fvE0Qaw0xSFqsA/yafi2iqeE0pvdFtCO1viYx8QL6f3Ln/aCCTLxs68SLf0KPM9eSeM8yBnA=="],
 
-    "@tsci/seveibar.PICO": ["@tsci/seveibar.pico@0.1.0", "https://registry-api.tscircuit.com/package_files/download?package_name=seveibar%2Fpico&package_file_id=99801927-963f-448f-bc5a-da14f0ca86b8", {}, "sha512-/g+hLlETfOBpWse5tWxHEOcVvNLp0F4QWEBnDxw3YJ5lrkiS+awNlpsOl4fXXIA1C5b81f1wfg3eKE9QJfSDtw=="],
+    "@tsci/seveibar.PICO": ["@tsci/seveibar.PICO@0.1.0", "https://registry-api.tscircuit.com/package_files/download?package_name=seveibar%2Fpico&package_file_id=65595139-2a92-4046-a7da-57816b8c3089", {}, "sha512-1yW1IIB/gHkbty18w20VdGGHawdSwh9WceXJoivXNRc1Cx8SAul1pMRIzZWSk+fr9cg2xspTwqS3kjyx1CB3tA=="],
 
     "@tscircuit/capacity-autorouter": ["@tscircuit/capacity-autorouter@0.0.89", "", { "dependencies": { "fast-json-stable-stringify": "^2.1.0", "object-hash": "^3.0.0" }, "peerDependencies": { "typescript": "^5.7.3" } }, "sha512-651yiJZvAKZL+NWwTOfDT3Iv8FAKbVBrpnZ1sno4pJkNwc82iA+RMw4JaI61rhYbmDrg8GUgMr4ieW8Usx6jGw=="],
 
