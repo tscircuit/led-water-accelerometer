@@ -13,7 +13,7 @@
     "build": "tsci build"
   },
   "devDependencies": {
-    "tscircuit": "^0.0.1102"
+    "tscircuit": "^0.0.1106"
   },
   "dependencies": {
     "@tsci/seveibar.PICO": "^0.1.0",

@@ -1,6 +1,6 @@
 import { LIS3DHTR as IMU } from "./imports/LIS3DHTR"
 import { WS2812B_2020 as LedWithIc } from "@tsci/seveibar.WS2812B_2020"
-import { PICO } from "@tsci/seveibar.pico"
+import { PICO } from "@tsci/seveibar.PICO"
 import { grid } from "@tscircuit/math-utils"
 import { sel } from "@tscircuit/core"
 
@@ -29,14 +29,10 @@ export default () => (
       const prevLedName = ledNum > 1 ? `LED${ledNum - 1}` : null
 
       return (
-        <>
+        <group key={ledName} pcbX={center.x / 2} pcbY={center.y / 2} schX={col * 3.5 - 24} schY={row * 2}>
           {/* ➊ LED itself */}
           <LedWithIc
             name={ledName}
-            schX={col * 3.5 - 24}
-            schY={row * 2}
-            pcbX={center.x / 2}
-            pcbY={center.y / 2}
           />
 
           {/* ➌ LED power / ground stitching */}
@@ -47,7 +43,7 @@ export default () => (
           {prevLedName && (
             <trace from={`.${prevLedName} .DO`} to={`.${ledName} .DI`} />
           )}
-        </>
+        </group>
       )
     })}
 
