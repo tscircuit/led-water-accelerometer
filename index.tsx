@@ -13,7 +13,7 @@ import { sel } from "@tscircuit/core"
  *   • Bulk and local decoupling capacitors for the LED string
  */
 export default () => (
-  <board width={142} height={130}>
+  <board width={142} height={130} autorouterVersion="v1">
     {/* ───────────────────────────────────────── LED MATRIX ───────────────────────────────────────── */}
     {grid({
       cols: 8,
